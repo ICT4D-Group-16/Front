@@ -6,7 +6,7 @@
         </el-aside>
     </el-aside>
     <el-main style="width: 900px">
-        <div>myAccount</div>
+        <div>Products</div>
     </el-main>
 </template>
 
