@@ -3,14 +3,14 @@
         <div class="guideClass">
             <h2 class="guideSpan">Guide</h2>
         </div>
-        <div>
-            <router-link to="/allProducts" class="routerLink">All Products</router-link>
+        <div class="guideBar">
+            <router-link to="/dashboard" class="routerLink">Dashboard</router-link>
         </div>
-        <div>
-            <router-link to="/myOrder" class="routerLink">My order</router-link>
+        <div class="guideBar">
+            <router-link to="/allProducts" class="routerLink">Recordings</router-link>
         </div>
-        <div>
-            <router-link to="/myAccount" class="routerLink">My account</router-link>
+        <div class="guideBar">
+            <router-link to="/myOrder" class="routerLink">Orders</router-link>
         </div>
     </div>
 </template>
