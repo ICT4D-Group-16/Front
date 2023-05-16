@@ -48,6 +48,9 @@ import bukia from "@/assets/burkia.png";
 </template>
 
 <script>
+    import axios from "@/utils/axios";
+    import {login} from "@/service/user";
+
     export default {
         name: 'login',
         data() {
@@ -61,22 +64,16 @@ import bukia from "@/assets/burkia.png";
         },
         created() {
             this.loginForm.username = "admin";
-            this.loginForm.password = "123";
+            this.loginForm.password = "macro123";
         },
         methods: {
             async loginAccount() {
                 try {
-                    // const response = await fetch('/api/login', {
-                    //     method: 'POST',
-                    //     headers: { 'Content-Type': 'application/json' },
-                    //     body: JSON.stringify({ email: this.email, password: this.password }),
-                    // })
-
-                    // if (response.ok) {
-                    //
-                    // } else {
-                    //
-                    // }
+                    const response = await login({
+                        "password": this.loginForm.password,
+                        "username": this.loginForm.username
+                    })
+                    console.log(response.data)
                     await this.$router.push('/dashboard')
                 } catch (error) {
                     // TODO: handle login error
