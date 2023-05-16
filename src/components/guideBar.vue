@@ -12,6 +12,9 @@
         <div class="guideBar">
             <router-link to="/myOrder" class="routerLink">Orders</router-link>
         </div>
+        <div class="guideBar">
+            <router-link to="/myAccount" class="routerLink">Products</router-link>
+        </div>
     </div>
 </template>
 

@@ -9,9 +9,9 @@
             <p class="orderGuide"> You can find all the orders related to our community here!</p>
         </div>
             <el-table :data="tableData" border style="width: 100%">
-                <el-table-column prop="date" label="Date" width="120" />
-                <el-table-column prop="name" label="Name" width="120" />
-                <el-table-column prop="phone" label="Phone Number" width="140" />
+                <el-table-column prop="createTime" label="Date" width="120" />
+                <el-table-column prop="modifiedTime" label="Name" width="120" />
+                <el-table-column prop="orderId" label="Phone Number" width="140" />
                 <el-table-column prop="productName" label="ProductName" width="120"/>
                 <el-table-column prop="productBelongName" label="Product Offer" width="140"/>
                 <el-table-column prop="communityNumber" label="Community" width="120"/>
@@ -27,16 +27,25 @@
 <script>
 import GuideBar from "@/components/guideBar.vue";
 import { ElMessage, ElMessageBox } from 'element-plus'
-import {productList} from "@/service/user";
+import {productCateList, productList} from "@/service/user";
 
 export default {
     name: "myOrder",
     components: {GuideBar},
-
+    created() {
+        this.fetchProductCateList()
+    },
     methods:{
+        async fetchProductCateList(){
+            await productCateList().then((res) => {
+               let array = res.data
+                console.log(array[0])
+                this.tableData = array
+            })
+        },
         handleDelete: async (row) => {
             await productList().then((res) => {
-                console.log(res)
+                console.log(res.data())
             })
             ElMessageBox.confirm(
                 'This task will be deleted, Continue?',
@@ -66,13 +75,12 @@ export default {
         return {
              tableData: [
                 {
-                    date: '2016-05-03',
-                    name: 'Tom',
-                    phone: '123456789',
-                    productNumber: '1',
-                    productName: 'Oil',
-                    productBelongName: 'Tom',
-                    communityNumber: '1',
+                    createTime: '',
+                    modifiedTime: '',
+                    orderId: '',
+                    productName: '',
+                    productBelongName: '',
+                    communityNumber: ''
                 },
 
             ]
