@@ -13,7 +13,7 @@ import myOrder from "@/components/myOrder.vue";
 
 
 const app = createApp(App)
-const PORT = process.env.PORT || 5001
+//const PORT = process.env.PORT || 5001
 const routes =[
     {path:'/',component: Welcome},
     {path:'/dashboard',component:Dashboard},
@@ -27,7 +27,7 @@ const router = VueRouter.createRouter({
 })
 app.use(ElementPlus)
 app.use(router)
-app.listen(PORT, '0.0.0.0', () => console.log(`Listening on ${ PORT }`))
+//app.listen(PORT, '0.0.0.0', () => console.log(`Listening on ${ PORT }`))
 app.mount('#app')
 
 
