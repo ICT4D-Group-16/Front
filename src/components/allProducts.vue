@@ -64,9 +64,12 @@
                         <el-input v-model="form.desc" type="textarea" />
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" style="margin-right: 10px;"> Play the message 💬</el-button>
+                        <audio controls style="margin-right: 40px">
+
+                        </audio>
+                        <!--<el-button type="primary" style="margin-right: 10px;"> Play the message 💬</el-button>-->
                         <el-button type="success" @click="onSubmit">Create</el-button>
-                        <el-button>Cancel</el-button>
+                        <el-button @click="onCancel" >Cancel</el-button>
                     </el-form-item>
                 </el-form>
             </el-dialog>
@@ -125,6 +128,9 @@ export default {
     methods:{
         onSubmit(){
             console.log('submit!')
+        },
+        onCancel(){
+            this.dialogTableVisible = false;
         },
         handleCheck(row) {
             this.dialogTableVisible = true;
