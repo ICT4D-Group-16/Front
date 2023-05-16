@@ -27,7 +27,7 @@ const router = VueRouter.createRouter({
 })
 app.use(ElementPlus)
 app.use(router)
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
+app.listen(PORT, '0.0.0.0', () => console.log(`Listening on ${ PORT }`))
 app.mount('#app')
 
 
