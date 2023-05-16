@@ -8,6 +8,7 @@
         <div >
             <p class="recordingGuide"> You can find all our community phone recordings here! </p>
 
+
             <el-dialog v-model="dialogTableVisible" title="Record and Input Product">
                 <el-form :model="form" label-width="120px">
                     <el-form-item label="Product name">
