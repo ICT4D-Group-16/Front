@@ -9,10 +9,12 @@
             <p class="orderGuide"> You can find all the orders related to our community here!</p>
         </div>
             <el-table :data="tableData" border style="width: 100%">
-                <el-table-column prop="date" label="Date" width="140" />
-                <el-table-column prop="name" label="Name" width="140" />
-                <el-table-column prop="phone" label="Phone Number" width="180" />
-                <el-table-column prop="address" label="Address" />
+                <el-table-column prop="date" label="Date" width="120" />
+                <el-table-column prop="name" label="Name" width="120" />
+                <el-table-column prop="phone" label="Phone Number" width="140" />
+                <el-table-column prop="productName" label="ProductName" width="120"/>
+                <el-table-column prop="productBelongName" label="Product Offer" width="140"/>
+                <el-table-column prop="communityNumber" label="Community" width="120"/>
                 <el-table-column label="Operations" width="100px">
                     <template v-slot="{row}">
                         <el-button size="small" type="danger" @click="handleDelete(row)">Delete</el-button>
@@ -25,13 +27,17 @@
 <script>
 import GuideBar from "@/components/guideBar.vue";
 import { ElMessage, ElMessageBox } from 'element-plus'
+import {productList} from "@/service/user";
 
 export default {
     name: "myOrder",
     components: {GuideBar},
 
     methods:{
-        handleDelete: (row) => {
+        handleDelete: async (row) => {
+            await productList().then((res) => {
+                console.log(res)
+            })
             ElMessageBox.confirm(
                 'This task will be deleted, Continue?',
                 'Warning',
@@ -63,26 +69,12 @@ export default {
                     date: '2016-05-03',
                     name: 'Tom',
                     phone: '123456789',
-                    address: 'No. 189, Grove St, Los Angeles',
+                    productNumber: '1',
+                    productName: 'Oil',
+                    productBelongName: 'Tom',
+                    communityNumber: '1',
                 },
-                {
-                    date: '2016-05-02',
-                    name: 'Tom',
-                    phone: '123456789',
-                    address: 'No. 189, Grove St, Los Angeles',
-                },
-                {
-                    date: '2016-05-04',
-                    name: 'Tom',
-                    phone: '123456789',
-                    address: 'No. 189, Grove St, Los Angeles',
-                },
-                {
-                    date: '2016-05-01',
-                    name: 'Tom',
-                    phone: '123456789',
-                    address: 'No. 189, Grove St, Los Angeles',
-                },
+
             ]
         };
     }

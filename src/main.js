@@ -11,6 +11,7 @@ import allProducts from "@/components/allProducts.vue";
 import myAccount    from "@/components/myAccount.vue";
 import myOrder from "@/components/myOrder.vue";
 
+
 const app = createApp(App)
 const routes =[
     {path:'/',component: Welcome},

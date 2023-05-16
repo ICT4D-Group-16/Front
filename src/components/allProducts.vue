@@ -75,8 +75,7 @@
                 <el-table-column prop="date" label="Date" width="120" />
                 <el-table-column prop="name" label="Name" width="120" />
                 <el-table-column prop="phone" label="Phone Number" width="160" />
-                <el-table-column prop="address" label="Address" />
-
+                <el-table-column prop="community" label="Community" />
                 <el-table-column label="Operations" width="180px">
                     <template v-slot="{row}">
                         <el-button size="small" type="primary" @click="handleCheck(this)">Check</el-button>
@@ -104,25 +103,7 @@ export default {
                     date: '2016-05-03',
                     name: 'Tom',
                     phone: '123456789',
-                    address: 'No. 189, Grove St, Los Angeles',
-                },
-                {
-                    date: '2016-05-02',
-                    name: 'Tom',
-                    phone: '123456789',
-                    address: 'No. 189, Grove St, Los Angeles',
-                },
-                {
-                    date: '2016-05-04',
-                    name: 'Tom',
-                    phone: '123456789',
-                    address: 'No. 189, Grove St, Los Angeles',
-                },
-                {
-                    date: '2016-05-01',
-                    name: 'Tom',
-                    phone: '123456789',
-                    address: 'No. 189, Grove St, Los Angeles',
+                    community: '010',
                 },
             ],
             dialogTableVisible: false,
