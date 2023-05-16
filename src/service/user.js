@@ -11,3 +11,15 @@ export function productList() {
 export function productCateList() {
   return axios.get("/pms/pmsOrderMaster/list");
 }
+
+export function getUserInfo() {
+  return axios.get("/user/info");
+}
+
+export function pmsProductList() {
+  return axios.get("/pms/product/list");
+}
+
+export function register() {
+    return axios.post("/user/register");
+}

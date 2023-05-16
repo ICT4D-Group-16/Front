@@ -15,33 +15,29 @@ import { ref } from "vue";
             <el-table-column type="expand">
                 <template #default="props">
                     <div>
-                        <p>State: {{ props.row.state }}</p>
-                        <p>City: {{ props.row.city }}</p>
-                        <p>Address: {{ props.row.address }}</p>
-                        <p>Zip: {{ props.row.zip }}</p>
-                        <h3 style="font-weight: bold">Product Supplier</h3>
-                        <el-table :data="props.row.family" :border="true">
-                            <el-table-column label="Name" prop="name" />
-                            <el-table-column label="State" prop="state" />
-                            <el-table-column label="City" prop="city" />
-                            <el-table-column label="Address" prop="address" />
-                            <el-table-column label="Zip" prop="zip" />
-                        </el-table>
+                        <p class="descriptionLabel">Price: {{ props.row.price }}</p>
+                        <p class="descriptionLabel">Quantity: {{ props.row.quantity }}</p>
+                        <p class="descriptionLabel">Address: {{ props.row.address }}</p>
+                        <p class="descriptionLabel">Description: {{ props.row.description }}</p>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column label="ProductNo" prop="ProductNo" />
-            <el-table-column label="ProductName" prop="ProductName" />
+            <el-table-column prop="productName" label="Product Name" />
+            <el-table-column prop="price" label="Product Price" />
         </el-table>
     </el-main>
 </template>
 
 <script>
 import GuideBar from "@/components/guideBar.vue";
+import {pmsProductList} from "@/service/user";
 
 export default {
     name: "myAccount",
     components: {GuideBar},
+    created() {
+        this.fetchProductList()
+    },
     data(){
         return{
             tableData: [{
@@ -69,6 +65,15 @@ export default {
                 }]
             }]
         }
+    },
+    methods: {
+        async fetchProductList(){
+            await pmsProductList().then((res) => {
+                let array = res.data
+                console.log(array[0])
+                this.tableData = array
+            })
+        }
     }
 }
 </script>
@@ -80,5 +85,10 @@ export default {
     color: #181818;
     font-size: 20px;
     font-weight: bold;
+}
+.descriptionLabel{
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 20px;
 }
 </style>

@@ -73,15 +73,19 @@ import bukia from "@/assets/burkia.png";
                         "password": this.loginForm.password,
                         "username": this.loginForm.username
                     })
-                    console.log(response.data.token)
+                    console.log(response.data)
                     localStorage.setItem('token', response.data.token)
+                    localStorage.setItem('userId', response.data.id)
+                    localStorage.setItem('phone',response.data.phone)
+                    localStorage.setItem('nickname',response.data.username)
+                    localStorage.setItem('Language',response.data.language)
                     await this.$router.push('/dashboard')
                 } catch (error) {
                     // TODO: handle login error
                     console.error(`Login error: ${error.message}`)
                 }
             },
-            registerAccount() {
+            async registerAccount() {
 
             }
         }
