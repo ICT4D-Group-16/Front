@@ -18,7 +18,6 @@ import GuideBar from "@/components/guideBar.vue";
             <el-col :span="10"> <div> <span class="personalClass"> Station Name: </span> <span> {{stationName}}</span> </div></el-col>
             <el-col :span="10"> <div> <span class="personalClass"> Postcode: </span> <span> {{postcode}}</span> </div></el-col>
         </el-row>
-
     </el-main>
 </template>
 
