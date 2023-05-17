@@ -23,3 +23,15 @@ export function getProduct(id) {
 export function getRecord(id) {
   return axios.get(`/pms/product/get/${id}`);
 }
+
+export function getUserInfo() {
+  return axios.get("/user/info");
+}
+
+export function pmsProductList() {
+  return axios.get("/pms/product/list");
+}
+
+export function register() {
+  return axios.post("/user/register");
+}
