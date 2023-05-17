@@ -10,65 +10,49 @@
 
 
             <el-dialog v-model="dialogTableVisible" title="Record and Input Product">
-                <el-form :model="form" label-width="120px">
-                    <el-form-item label="Product name">
-                        <el-input v-model="form.name" />
+                <el-form :model="form" label-width="150px">
+                    <el-form-item label="Description">
+                        <el-input v-model="form.description" />
                     </el-form-item>
                     <el-form-item label="Product price">
                         <el-input v-model="form.price" />
                     </el-form-item>
-                    <el-form-item label="Product name">
-                        <el-input v-model="form.amount" />
+                    <el-form-item label="Quantity">
+                        <el-input v-model="form.quantity" />
                     </el-form-item>
-                    <el-form-item label="Activity zone">
-                        <el-select v-model="form.region" placeholder="please select your zone">
-                            <el-option label="Zone one" value="Amsterdam" />
-                            <el-option label="Zone two" value="London" />
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="Activity time">
-                        <el-col :span="11">
-                            <el-date-picker
-                                v-model="form.date1"
-                                type="date"
-                                placeholder="Pick a date"
-                                style="width: 100%"
-                            />
-                        </el-col>
-                        <el-col :span="2" class="text-center">
-                            <span class="text-gray-500">-</span>
-                        </el-col>
-                        <el-col :span="11">
-                            <el-time-picker
-                                v-model="form.date2"
-                                placeholder="Pick a time"
-                                style="width: 100%"
-                            />
-                        </el-col>
-                    </el-form-item>
-                    <el-form-item label="Instant delivery">
-                        <el-switch v-model="form.delivery" />
-                    </el-form-item>
-                    <el-form-item label="Product type">
-                        <el-checkbox-group v-model="form.type">
-                            <el-checkbox label="Fruit" name="type" />
-                            <el-checkbox label="Oil" name="type" />
-                        </el-checkbox-group>
-                    </el-form-item>
-                    <el-form-item label="Resources">
-                        <el-radio-group v-model="form.resource">
-                            <el-radio label="Sponsor" />
-                            <el-radio label="Venue" />
-                        </el-radio-group>
-                    </el-form-item>
-                    <el-form-item label="Activity form">
-                        <el-input v-model="form.desc" type="textarea" />
-                    </el-form-item>
-                    <el-form-item>
-                        <audio controls style="margin-right: 40px">
+                  <el-form-item label="Modified Time">
+                    <el-input v-model="form.modifiedTime" />
+                  </el-form-item>
+                  <el-form-item label="Production Date">
+                    <el-input v-model="form.productionDate" />
+                  </el-form-item>
+                  <el-form-item label="Product Name">
+                    <el-input v-model="form.productName" />
+                  </el-form-item>
+                  <el-form-item label="Published Status">
+                    <el-input v-model="form.publishStatus" />
+                  </el-form-item>
+<!--                  <el-form-item label="Translates Language">-->
+<!--                    <el-input v-model="form.translates[0].language" />-->
+<!--                  </el-form-item>-->
+<!--                  <el-form-item label="Translates Text">-->
+<!--                    <el-input v-model="form.translates[0].text" />-->
+<!--                  </el-form-item>-->
 
-                        </audio>
-                        <!--<el-button type="primary" style="margin-right: 10px;"> Play the message 💬</el-button>-->
+                  <div class="drag-drop">
+                    <div class="drag-drop-area" @dragover="handleDragOver" @drop="handleDrop">
+                      <span>将播报语音拖拽到此处</span>
+                    </div>
+                    <input type="file" ref="fileInput" style="display: none" @change="handleFileSelect" accept="audio/mpeg">
+                  </div>
+
+                    <el-form-item>
+                      <audio controls style="margin-right: 40px">
+                        <source :src="this.record_url" type="audio/mpeg">
+<!--                        <source src="https://bucketeer-1a682029-f982-4755-8e3c-663c7658c9b8.s3.amazonaws.com/public/e501a298-86b5-4b17-b700-cabcef93de36-file_example_WAV_1MG.wav" type="audio/mpeg">-->
+                      </audio>
+<!--                      <p>{{ this.record_url}}</p>-->
+                      <br>
                         <el-button type="success" @click="onSubmit">Create</el-button>
                         <el-button @click="onCancel" >Cancel</el-button>
                     </el-form-item>
@@ -76,17 +60,16 @@
             </el-dialog>
 
             <el-table :data="tableData" border style="width: 100%">
-                <el-table-column prop="date" label="Date" width="120" />
-                <el-table-column prop="name" label="Name" width="120" />
-                <el-table-column prop="phone" label="Phone Number" width="160" />
-                <el-table-column prop="community" label="Community" />
-                <el-table-column label="Operations" width="180px">
+                <el-table-column prop="recordingId" label="recordingId" width="120" />
+                <el-table-column prop="phone" label="phone" width="180" />
+                <el-table-column prop="createTime" label="createTime" width="260" />
+              <el-table-column prop="status" label="status" width="90" />
+                <el-table-column label="Operations">
                     <template v-slot="{row}">
-                        <el-button size="small" type="primary" @click="handleCheck(this)">Check</el-button>
-                        <el-button size="small" type="success" @click="handleFinish(row)">Finish</el-button>
+                        <el-button size="small" type="primary" @click="handleCheck(row.recordingId)">Check</el-button>
+                        <el-button size="small" type="success" @click="handleFinish(row.recordingId)">Finish</el-button>
                     </template>
                 </el-table-column>
-
             </el-table>
         </div>
     </el-main>
@@ -96,46 +79,83 @@
 import GuideBar from "@/components/guideBar.vue";
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { reactive } from 'vue';
+import {recordingList} from "../service/user";
+import {getProduct} from "../service/user";
+
 export default {
     name: "allProducts",
     components: {GuideBar},
-
+    created() {
+      this.fetchProductCateList()
+    },
     data() {
         return {
             tableData: [
                 {
-                    date: '2016-05-03',
-                    name: 'Tom',
-                    phone: '123456789',
-                    community: '010',
+                  recordingId: '2016-05-03',
+                  phone: 'Tom',
+                  url: '123456789',
+                  createTime: '',
+                  status: ''
                 },
             ],
             dialogTableVisible: false,
+            record_url: 'https://bucketeer-1a682029-f982-4755-8e3c-663c7658c9b8.s3.amazonaws.com/public/e501a298-86b5-4b17-b700-cabcef93de36-file_example_WAV_1MG.wav',
             form: reactive({
-                name: '',
-                price: '',
-                amount: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: '',
+              "audios": '',
+              "auditStatus": 1,
+              "description": "my",
+              "indate": "2023-05-16T20:09:56.360Z",
+              "modifiedTime": "2023-05-16T20:09:56.360Z",
+              "price": 1,
+              "productId": 1,
+              "productName": "string",
+              "productionDate": "2023-05-16T20:09:56.360Z",
+              "publishStatus": 1,
+              "quantity": 1,
+              "recordingId": 1,
+              "supplierUserId": 1,
+              "translates": [
+                {
+                  "createTime": "2023-05-16T20:09:56.360Z",
+                  "language": "string",
+                  "productId": 0,
+                  "text": "string",
+                  "translateId": 0
+                }
+              ]
             }),
         };
     },
 
     methods:{
+        async fetchProductCateList(){
+          await recordingList().then((res) => {
+            let array = res.data
+            console.log(array[0])
+            this.tableData = array
+          })
+        },
         onSubmit(){
             console.log('submit!')
         },
         onCancel(){
             this.dialogTableVisible = false;
         },
-        handleCheck(row) {
+        handleCheck(recordingId) {
             this.dialogTableVisible = true;
-            console.log('Clicked row:', row)
+          // For test
+          getProduct(26)
+              .then(response => {
+                // console.log(response.data)
+                // reduce internet cost
+                this.record_url = this.tableData.find(item => item.recordingId===13).url
+                this.form = response.data;
+              })
+              .catch(error => {
+                console.error('Error:', error);
+              });
+          console.log('Clicked row:', recordingId)
         },
         handleFinish: (row) => {
             ElMessageBox.confirm(
@@ -161,6 +181,25 @@ export default {
                 })
             console.log('Clicked row:', row)
         },
+
+      methods: {
+        handleDragOver(event) {
+          event.preventDefault();
+        },
+        handleDrop(event) {
+          event.preventDefault();
+          const file = event.dataTransfer.files[0];
+          this.uploadFile(file);
+        },
+        handleFileSelect() {
+          const file = this.$refs.fileInput.files[0];
+          this.uploadFile(file);
+        },
+        uploadFile(file) {
+          // 执行上传文件的操作
+          console.log('上传文件:', file);
+        }
+      }
     },
 }
 </script>
@@ -172,5 +211,24 @@ export default {
     color: #181818;
     font-size: 20px;
     font-weight: bold;
+}
+
+ .drag-drop {
+   width: 300px;
+   height: 200px;
+   border: 2px dashed #ccc;
+   border-radius: 4px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+
+.drag-drop-area {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 </style>
