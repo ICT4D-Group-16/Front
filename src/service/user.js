@@ -20,8 +20,12 @@ export function getProduct(id) {
   return axios.get(`/pms/product/get/${id}`);
 }
 
+export function getProductByRecordID(id) {
+  return axios.get(`/pms/product/getByRecord/${id}`);
+}
+
 export function getRecord(id) {
-  return axios.get(`/pms/product/get/${id}`);
+  return axios.get(`/pms/recording/get/${id}`);
 }
 
 export function getUserInfo() {

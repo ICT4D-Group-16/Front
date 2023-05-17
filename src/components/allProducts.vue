@@ -79,7 +79,7 @@
 import GuideBar from "@/components/guideBar.vue";
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { reactive } from 'vue';
-import {recordingList} from "../service/user";
+import {getProductByRecordID, getRecord, recordingList} from "../service/user";
 import {getProduct} from "../service/user";
 
 export default {
@@ -145,7 +145,22 @@ export default {
         handleCheck(recordingId) {
             this.dialogTableVisible = true;
           // For test
-          getProduct(26)
+          console.log(recordingId)
+
+          // getRecord(recordingId)
+          //     .then(response => {
+          //       console.log(response.data)
+          //       console.log(1)
+          //       // reduce internet cost
+          //       this.record_url = this.tableData.find(item => item.recordingId===13).url
+          //       this.form = response.data;
+          //     })
+          //     .catch(error => {
+          //       console.error('Error:', error);
+          //     });
+          console.log('Clicked row:', recordingId)
+
+          getProductByRecordID(recordingId)
               .then(response => {
                 // console.log(response.data)
                 // reduce internet cost
