@@ -32,6 +32,7 @@
                   <el-form-item label="Published Status">
                     <el-input v-model="form.publishStatus" />
                   </el-form-item>
+
 <!--                  <el-form-item label="Translates Language">-->
 <!--                    <el-input v-model="form.translates[0].language" />-->
 <!--                  </el-form-item>-->
@@ -63,11 +64,11 @@
                 <el-table-column prop="recordingId" label="recordingId" width="120" />
                 <el-table-column prop="phone" label="phone" width="180" />
                 <el-table-column prop="createTime" label="createTime" width="260" />
-              <el-table-column prop="status" label="status" width="90" />
+<!--              <el-table-column prop="status" label="status" width="90" />-->
                 <el-table-column label="Operations">
                     <template v-slot="{row}">
                         <el-button size="small" type="primary" @click="handleCheck(row.recordingId)">Check</el-button>
-                        <el-button size="small" type="success" @click="handleFinish(row.recordingId)">Finish</el-button>
+<!--                        <el-button size="small" type="success" @click="handleFinish(row.recordingId)">Finish</el-button>-->
                     </template>
                 </el-table-column>
             </el-table>

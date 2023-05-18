@@ -19,6 +19,13 @@ import { ref } from "vue";
                         <p class="descriptionLabel">Quantity: {{ props.row.quantity }}</p>
                         <p class="descriptionLabel">Address: {{ props.row.address }}</p>
                         <p class="descriptionLabel">Description: {{ props.row.description }}</p>
+                      <p class="descriptionLabel">Audios:</p>
+                      <el-form-item v-for="audio in props.row.audios" :key="audio.id">
+                        <audio controls style="margin-right: 140px">
+                          <source :src="audio.url" type="audio/mpeg">
+                        </audio>
+                        <br>
+                      </el-form-item>
                     </div>
                 </template>
             </el-table-column>
@@ -40,30 +47,7 @@ export default {
     },
     data(){
         return{
-            tableData: [{
-                ProductNo:'1001',
-                date: '2016-05-02',
-                ProductName: 'TOY',
-                state: 'New York',
-                city: 'New York City',
-                address: 'No. 189, Grove St, Los Angeles',
-                zip: '10001',
-                family: [{
-                    date: '2016-05-02',
-                    name: 'Tom',
-                    state: 'New York',
-                    city: 'New York City',
-                    address: 'No. 189, Grove St, Los Angeles',
-                    zip: '10001'
-                }, {
-                    date: '2016-05-04',
-                    name: 'Tom',
-                    state: 'New York',
-                    city: 'New York City',
-                    address: 'No. 189, Grove St, Los Angeles',
-                    zip: '10001'
-                }]
-            }]
+            tableData: ''
         }
     },
     methods: {
@@ -73,7 +57,8 @@ export default {
                 console.log(array[0])
                 this.tableData = array
             })
-        }
+        },
+
     }
 }
 </script>
