@@ -76,7 +76,8 @@
                 <el-button type="button" @click="downloadWAVRecordAudioData"
                 >下载WAV录音文件</el-button
                 >
-                <el-button type="button" @click="uploadWAVData">上传WAV录音数据</el-button>
+                <el-button type="button" @click="uploadWAVDataName">upload audio name file</el-button>
+                <el-button type="button" @click="uploadWAVDataDescription">upload audio description file</el-button>
                 <br />
               </div>
             </el-dialog>
@@ -101,8 +102,7 @@
 import GuideBar from "@/components/guideBar.vue";
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { reactive } from 'vue';
-import {getProductByRecordID, getRecord, recordingList, uploadWavData} from "../service/user";
-import {getProduct} from "../service/user";
+import {getProductByRecordID, getRecord, recordingList, uploadWAVDataDescription, uploadWavDataName} from "../service/user";
 import Recorder from "js-audio-recorder";
 
 export default {
@@ -295,7 +295,7 @@ export default {
         this.recorder.downloadWAV(new Date().getTime() + '');
       },
       //上传wav录音数据
-      uploadWAVData() {
+      uploadWavDataName() {
         var wavBlob = this.recorder.getWAVBlob();
         // 创建一个formData对象
         var formData = new FormData()
@@ -309,7 +309,26 @@ export default {
         formData.append("file", fileOfBlob, new Date().getTime() + '.wav');
 
         console.log(formData)
-        uploadWavData(formData).then((response) => {
+        uploadWavDataName(formData).then((response) => {
+          console.log(response);
+        });
+      },
+
+      uploadWAVDataDescription() {
+        var wavBlob = this.recorder.getWAVBlob();
+        // 创建一个formData对象
+        var formData = new FormData()
+        // 此处获取到blob对象后需要设置fileName满足当前项目上传需求，其它项目可直接传把blob作为file塞入formData
+        const newbolb = new Blob([wavBlob], {type: 'audio/wav'})
+        //获取当时时间戳作为文件名
+        const fileOfBlob = new File([newbolb], new Date().getTime() + '.wav')
+        formData.append('productId', 8)
+        formData.append('language', 'english')
+        // formData.append('file', fileOfBlob)
+        formData.append("file", fileOfBlob, new Date().getTime() + '.wav');
+
+        console.log(formData)
+        uploadWAVDataDescription(formData).then((response) => {
           console.log(response);
         });
       },

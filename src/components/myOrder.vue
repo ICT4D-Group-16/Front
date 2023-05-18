@@ -28,6 +28,7 @@
 import GuideBar from "@/components/guideBar.vue";
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {productCateList, productList} from "@/service/user";
+import {deleteOrderMasterById} from "../service/user";
 
 export default {
     name: "myOrder",
@@ -39,14 +40,12 @@ export default {
         async fetchProductCateList(){
             await productCateList().then((res) => {
                let array = res.data
-                console.log(array[0])
+                // console.log(array[0])
                 this.tableData = array
             })
         },
         handleDelete: async (row) => {
-            await productList().then((res) => {
-                console.log(res.data())
-            })
+
             ElMessageBox.confirm(
                 'This task will be deleted, Continue?',
                 'Warning',
@@ -61,6 +60,16 @@ export default {
                         type: 'success',
                         message: 'Delete completed',
                     })
+
+                  productCateList().then((res) => {
+                    deleteOrderMasterById(row.orderId)
+                    // let array = res.data
+                    this.fetchProductCateList()
+                    // this.tableData = array
+                  })
+
+
+                  console.log('row')
                 })
                 .catch(() => {
                     ElMessage({
@@ -68,21 +77,12 @@ export default {
                         message: 'Delete canceled',
                     })
                 })
-            console.log('Clicked row:', row)
+            // console.log('Clicked row:', row)
         },
     },
     data() {
         return {
              tableData: [
-                {
-                    createTime: '',
-                    modifiedTime: '',
-                    orderId: '',
-                    productName: '',
-                    productBelongName: '',
-                    communityNumber: ''
-                },
-
             ]
         };
     }

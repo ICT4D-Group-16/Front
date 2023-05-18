@@ -9,7 +9,7 @@ export function productList() {
 }
 
 export function productCateList() {
-  return axios.get("/pms/pmsOrderMaster/list");
+  return axios.get("/pms/orderMaster/list");
 }
 
 export function recordingList() {
@@ -18,6 +18,10 @@ export function recordingList() {
 
 export function getProduct(id) {
   return axios.get(`/pms/product/get/${id}`);
+}
+
+export function deleteOrderMasterById(id) {
+  return axios.delete(`/pms/orderMaster/delete/${id}`);
 }
 
 export function getProductByRecordID(id) {
@@ -44,8 +48,16 @@ export function register() {
 // import axios from 'axios';
 
 // Function to upload WAV data
-export function uploadWavData(formData) {
+export function uploadWavDataName(formData) {
   return axios.post('/pms/audio/createName', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+}
+
+export function uploadWAVDataDescription(formData) {
+  return axios.post('/pms/audio/createDescription', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
