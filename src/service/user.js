@@ -39,3 +39,15 @@ export function pmsProductList() {
 export function register() {
   return axios.post("/user/register");
 }
+
+// Import the necessary dependencies
+// import axios from 'axios';
+
+// Function to upload WAV data
+export function uploadWavData(formData) {
+  return axios.post('/pms/audio/createName', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+}

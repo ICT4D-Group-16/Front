@@ -101,7 +101,7 @@
 import GuideBar from "@/components/guideBar.vue";
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { reactive } from 'vue';
-import {getProductByRecordID, getRecord, recordingList} from "../service/user";
+import {getProductByRecordID, getRecord, recordingList, uploadWavData} from "../service/user";
 import {getProduct} from "../service/user";
 import Recorder from "js-audio-recorder";
 
@@ -292,7 +292,7 @@ export default {
       },
       //下载WAV录音文件
       downloadWAVRecordAudioData() {
-        this.recorder.downloadWAV("badao");
+        this.recorder.downloadWAV(new Date().getTime() + '');
       },
       //上传wav录音数据
       uploadWAVData() {
@@ -303,7 +303,12 @@ export default {
         const newbolb = new Blob([wavBlob], {type: 'audio/wav'})
         //获取当时时间戳作为文件名
         const fileOfBlob = new File([newbolb], new Date().getTime() + '.wav')
-        formData.append('file', fileOfBlob)
+        formData.append('productId', 8)
+        formData.append('language', 'english')
+        // formData.append('file', fileOfBlob)
+        formData.append("file", fileOfBlob, new Date().getTime() + '.wav');
+
+        console.log(formData)
         uploadWavData(formData).then((response) => {
           console.log(response);
         });
