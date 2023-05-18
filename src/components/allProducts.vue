@@ -40,20 +40,20 @@
 <!--                    <el-input v-model="form.translates[0].text" />-->
 <!--                  </el-form-item>-->
 
-                  <div class="drag-drop">
+                  <div class="drag-drop" style="width: 100%">
                     <div class="drag-drop-area" @dragover="handleDragOver" @drop="handleDrop">
                       <span>将播报语音拖拽到此处</span>
                     </div>
                     <input type="file" ref="fileInput" style="display: none" @change="handleFileSelect" accept="audio/mpeg">
                   </div>
-
+                  <br>
                     <el-form-item>
-                      <audio controls style="margin-right: 40px">
+                      <audio controls style="width: 70%">
                         <source :src="this.record_url" type="audio/mpeg">
 <!--                        <source src="https://bucketeer-1a682029-f982-4755-8e3c-663c7658c9b8.s3.amazonaws.com/public/e501a298-86b5-4b17-b700-cabcef93de36-file_example_WAV_1MG.wav" type="audio/mpeg">-->
                       </audio>
 <!--                      <p>{{ this.record_url}}</p>-->
-                      <br>
+                      <br><br>
                         <el-button type="success" @click="onSubmit">Create</el-button>
                         <el-button @click="onCancel" >Cancel</el-button>
                     </el-form-item>

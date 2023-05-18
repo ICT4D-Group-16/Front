@@ -20,12 +20,22 @@ import { ref } from "vue";
                         <p class="descriptionLabel">Address: {{ props.row.address }}</p>
                         <p class="descriptionLabel">Description: {{ props.row.description }}</p>
                       <p class="descriptionLabel">Audios:</p>
-                      <el-form-item v-for="audio in props.row.audios" :key="audio.id">
-                        <audio controls style="margin-right: 140px">
-                          <source :src="audio.url" type="audio/mpeg">
-                        </audio>
-                        <br>
-                      </el-form-item>
+                      <el-button style="width: 100%" size="big" type="primary" @click="showAudios(props.row.productId)">Show audios</el-button>
+                      <el-dialog v-model="dialogTableVisible" title="All the audios of this product">
+                        <el-form>
+
+                          <el-form-item v-for="audio in props.row.audios" :key="audio.id">
+                            <p class="descriptionLabel">Language: {{ audio.language }}</p>
+                            <audio controls style="width: 100%">
+                              <source :src="audio.url" type="audio/mpeg">
+                            </audio>
+
+                            <br>
+                          </el-form-item>
+
+                        </el-form>
+                      </el-dialog>
+
                     </div>
                 </template>
             </el-table-column>
@@ -47,7 +57,8 @@ export default {
     },
     data(){
         return{
-            tableData: ''
+            tableData: '',
+          dialogTableVisible: false,
         }
     },
     methods: {
@@ -58,7 +69,12 @@ export default {
                 this.tableData = array
             })
         },
+      showAudios(productId) {
+        this.dialogTableVisible = true;
+        // For test
+        console.log(productId)
 
+      },
     }
 }
 </script>
