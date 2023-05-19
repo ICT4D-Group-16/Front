@@ -76,7 +76,7 @@
                 <el-button type="button" @click="downloadWAVRecordAudioData"
                 >下载WAV录音文件</el-button
                 >
-                <el-button type="button" @click="uploadWAVDataName">upload audio name file</el-button>
+                <el-button type="button" @click="uploadWavDataName">upload audio name file</el-button>
                 <el-button type="button" @click="uploadWAVDataDescription">upload audio description file</el-button>
                 <br />
               </div>
@@ -132,6 +132,9 @@ export default {
                 },
             ],
             dialogTableVisible: false,
+            recordingId_to_sub: 0,
+          productId_to_sub: 0,
+            language_to_sub: 0,
             record_url: 'https://bucketeer-1a682029-f982-4755-8e3c-663c7658c9b8.s3.amazonaws.com/public/e501a298-86b5-4b17-b700-cabcef93de36-file_example_WAV_1MG.wav',
             form: reactive({
               "audios": '',
@@ -177,8 +180,10 @@ export default {
         },
         handleCheck(recordingId) {
             this.dialogTableVisible = true;
+            this.recordingId_to_sub = recordingId
+
           // For test
-          console.log(recordingId)
+          // console.log(recordingId)
 
           // getRecord(recordingId)
           //     .then(response => {
@@ -198,6 +203,7 @@ export default {
                 // console.log(response.data)
                 // reduce internet cost
                 this.record_url = this.tableData.find(item => item.recordingId===13).url
+                this.productId_to_sub = response.data.productId
                 this.form = response.data;
               })
               .catch(error => {
@@ -303,7 +309,7 @@ export default {
         const newbolb = new Blob([wavBlob], {type: 'audio/wav'})
         //获取当时时间戳作为文件名
         const fileOfBlob = new File([newbolb], new Date().getTime() + '.wav')
-        formData.append('productId', 8)
+        formData.append('productId', this.productId_to_sub)
         formData.append('language', 'english')
         // formData.append('file', fileOfBlob)
         formData.append("file", fileOfBlob, new Date().getTime() + '.wav');
@@ -322,8 +328,8 @@ export default {
         const newbolb = new Blob([wavBlob], {type: 'audio/wav'})
         //获取当时时间戳作为文件名
         const fileOfBlob = new File([newbolb], new Date().getTime() + '.wav')
-        formData.append('productId', 8)
-        formData.append('language', 'english')
+        formData.append('productId', this.recordingId_to_sub)
+        formData.append('language', this.language_to_sub)
         // formData.append('file', fileOfBlob)
         formData.append("file", fileOfBlob, new Date().getTime() + '.wav');
 
