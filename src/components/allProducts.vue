@@ -76,6 +76,13 @@
                 <el-button type="button" @click="downloadWAVRecordAudioData"
                 >下载WAV录音文件</el-button
                 >
+<!--                <br>-->
+<!--                <input type="text" v-model="language_type" placeholder="Enter language type before upload" />-->
+<!--                <br>-->
+                <br><br>
+                <el-form-item label="Language Type: ">
+                  <el-input v-model="language_type" />
+                </el-form-item>
                 <el-button type="button" @click="uploadWavDataName">upload audio name file</el-button>
                 <el-button type="button" @click="uploadWAVDataDescription">upload audio description file</el-button>
                 <br />
@@ -132,6 +139,7 @@ export default {
                 },
             ],
             dialogTableVisible: false,
+          language_type: '',
             recordingId_to_sub: 0,
           productId_to_sub: 0,
             language_to_sub: 0,
@@ -310,7 +318,7 @@ export default {
         //获取当时时间戳作为文件名
         const fileOfBlob = new File([newbolb], new Date().getTime() + '.wav')
         formData.append('productId', this.productId_to_sub)
-        formData.append('language', 'english')
+        formData.append('language', this.language_type)
         // formData.append('file', fileOfBlob)
         formData.append("file", fileOfBlob, new Date().getTime() + '.wav');
 
@@ -329,7 +337,7 @@ export default {
         //获取当时时间戳作为文件名
         const fileOfBlob = new File([newbolb], new Date().getTime() + '.wav')
         formData.append('productId', this.recordingId_to_sub)
-        formData.append('language', this.language_to_sub)
+        formData.append('language', this.language_type)
         // formData.append('file', fileOfBlob)
         formData.append("file", fileOfBlob, new Date().getTime() + '.wav');
 
