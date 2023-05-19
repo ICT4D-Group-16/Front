@@ -44,6 +44,11 @@ export function register() {
   return axios.post("/user/register");
 }
 
+export function updateProduct(data) {
+  return axios.post("/pms/product/update", data);
+}
+
+
 // Import the necessary dependencies
 // import axios from 'axios';
 

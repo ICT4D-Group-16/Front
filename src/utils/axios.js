@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:8077";
+axios.defaults.baseURL = "https://ict4d-group16.herokuapp.com/";
 axios.defaults.withCredentials = true;
 axios.defaults.headers["X-Requested-With"] = "XMLHttpRequest";
 axios.defaults.headers["token"] = localStorage.getItem("token") || "";

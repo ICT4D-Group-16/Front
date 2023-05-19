@@ -8,7 +8,6 @@
         <div >
             <p class="recordingGuide"> You can find all our community phone recordings here! </p>
 
-
             <el-dialog v-model="dialogTableVisible" title="Record and Input Product">
                 <el-form :model="form" label-width="150px">
                     <el-form-item label="Description">
@@ -42,28 +41,28 @@
 
                   <div class="drag-drop" style="width: 100%">
                     <div class="drag-drop-area" @dragover="handleDragOver" @drop="handleDrop">
-                      <span>将播报语音拖拽到此处</span>
+                      <span>Drag and drop the announcement voice here (.wav file) or record an audio</span>
                     </div>
                     <input type="file" ref="fileInput" style="display: none" @change="handleFileSelect" accept="audio/mpeg">
                   </div>
                   <br>
                     <el-form-item>
-                      <audio controls style="width: 70%">
+                      <audio controls style="width: 60%">
                         <source :src="this.record_url" type="audio/mpeg">
 <!--                        <source src="https://bucketeer-1a682029-f982-4755-8e3c-663c7658c9b8.s3.amazonaws.com/public/e501a298-86b5-4b17-b700-cabcef93de36-file_example_WAV_1MG.wav" type="audio/mpeg">-->
                       </audio>
 <!--                      <p>{{ this.record_url}}</p>-->
                       <br><br>
-                        <el-button type="success" @click="onSubmit">Create</el-button>
-                        <el-button @click="onCancel" >Cancel</el-button>
+<!--                        <el-button type="success" @click="onSubmit">Create</el-button>-->
+<!--                        <el-button @click="onCancel" >Cancel</el-button>-->
                     </el-form-item>
                 </el-form>
               <div>
-                <el-button type="button" @click="startRecordAudio">开始录音</el-button>
-                <h3>录音时长：{{ recorder.duration.toFixed(4) }}</h3>
+                <el-button type="button" @click="startRecordAudio">Start recording</el-button>
+                <h3>Duration of recording: {{ recorder.duration.toFixed(4) }}s</h3>
                 <br />
-                <el-button type="button" @click="stopRecordAudio">停止录音</el-button>
-                <el-button type="button" @click="playRecordAudio">播放录音</el-button>
+                <el-button type="button" @click="stopRecordAudio">Stop recording</el-button>
+                <el-button type="button" @click="playRecordAudio">Play the recording</el-button>
 <!--                <el-button type="button" @click="getPCBRecordAudioData"-->
 <!--                >获取PCB录音数据</el-button-->
 <!--                >-->
@@ -73,14 +72,13 @@
 <!--                <el-button type="button" @click="getWAVRecordAudioData"-->
 <!--                >获取WAV录音数据</el-button-->
 <!--                >-->
-                <el-button type="button" @click="downloadWAVRecordAudioData"
-                >下载WAV录音文件</el-button
-                >
+                <br><br>
+                <el-button type="button" @click="downloadWAVRecordAudioData">Download WAV recording files</el-button>
 <!--                <br>-->
 <!--                <input type="text" v-model="language_type" placeholder="Enter language type before upload" />-->
 <!--                <br>-->
                 <br><br>
-                <el-form-item label="Language Type: ">
+                <el-form-item label="Language Type (input before upload the audio): ">
                   <el-input v-model="language_type" />
                 </el-form-item>
                 <el-button type="button" @click="uploadWavDataName">upload audio name file</el-button>
@@ -190,20 +188,6 @@ export default {
             this.dialogTableVisible = true;
             this.recordingId_to_sub = recordingId
 
-          // For test
-          // console.log(recordingId)
-
-          // getRecord(recordingId)
-          //     .then(response => {
-          //       console.log(response.data)
-          //       console.log(1)
-          //       // reduce internet cost
-          //       this.record_url = this.tableData.find(item => item.recordingId===13).url
-          //       this.form = response.data;
-          //     })
-          //     .catch(error => {
-          //       console.error('Error:', error);
-          //     });
           console.log('Clicked row:', recordingId)
 
           getProductByRecordID(recordingId)
@@ -213,6 +197,7 @@ export default {
                 this.record_url = this.tableData.find(item => item.recordingId===13).url
                 this.productId_to_sub = response.data.productId
                 this.form = response.data;
+                console.log(this.form)
               })
               .catch(error => {
                 console.error('Error:', error);

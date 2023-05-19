@@ -8,6 +8,7 @@ import bukia from "@/assets/burkia.png";
         <el-row><img :src="bukia " style="width: 600px;"></el-row>
     </header>
     <main>
+
         <div class="login">
             <el-card class="login-form-layout" >
                 <el-form autoComplete="on"
@@ -15,6 +16,8 @@ import bukia from "@/assets/burkia.png";
                          ref="loginForm"
                          label-position="left">
                     <h2 class="login-title color-main">Daughters of Savannah</h2>
+                  <br>
+                  <p style="color: rgba(0, 0, 0, 0.3)">You can log in via the default account below</p>
                     <el-form-item prop="username">
                         <el-input name="username"
                                   type="text"
@@ -42,8 +45,28 @@ import bukia from "@/assets/burkia.png";
                     </el-form-item>
                 </el-form>
             </el-card>
-
         </div>
+      <el-dialog
+          title="Register"
+          :visible="dialogTableVisible"
+          @close="dialogTableVisible = false"
+      >
+        <el-form :model="registerForm" label-position="left" ref="registerForm">
+          <el-form-item label="Username" prop="username">
+            <el-input
+                v-model="registerForm.username"
+                placeholder="Enter your username"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="Password" prop="password">
+            <el-input
+                v-model="registerForm.password"
+                placeholder="Enter your password"
+                type="password"
+            ></el-input>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
     </main>
 </template>
 
@@ -53,13 +76,18 @@ import bukia from "@/assets/burkia.png";
 
     export default {
         name: 'login',
+
         data() {
            return {
                loginForm: {
                    username: '',
                    password: '',
                },
-
+             dialogTableVisible: false,
+             registerForm: {
+               username: '',
+               password: '',
+             },
            }
         },
         created() {
@@ -87,6 +115,10 @@ import bukia from "@/assets/burkia.png";
             },
             async registerAccount() {
 
+              this.dialogTableVisible = true
+              console.log(this.dialogTableVisible)
+              this.dialogTableVisible = true
+              console.log(this.dialogTableVisible)
             }
         }
     }
