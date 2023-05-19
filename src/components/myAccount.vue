@@ -20,16 +20,32 @@ import { ref } from "vue";
                         <p class="descriptionLabel">Address: {{ props.row.address }}</p>
                         <p class="descriptionLabel">Description: {{ props.row.description }}</p>
                       <p class="descriptionLabel">Audios:</p>
-                      <el-button style="width: 100%" size="big" type="primary" @click="showAudios(props.row.productId)">Show audios</el-button>
-                      <el-dialog v-model="dialogTableVisible" title="All the audios of this product">
+                      <div style="display: flex;">
+                        <el-button style="width: 100%" size="big" type="primary" @click="showNameAudios(props.row.productId)">Show Name Audios</el-button>
+                        <el-button style="width: 100%" size="big" type="primary" @click="showDescriptionAudios(props.row.productId)">Show Description Audios</el-button>
+                      </div>
+                      <el-dialog v-model="dialogTableVisibleNameAudio" title="All the audios of this product">
                         <el-form>
 
-                          <el-form-item v-for="audio in props.row.audios" :key="audio.id">
+                          <el-form-item v-for="audio in props.row.nameAudios" :key="audio.id">
                             <p class="descriptionLabel">Language: {{ audio.language }}</p>
                             <audio controls style="width: 100%">
                               <source :src="audio.url" type="audio/mpeg">
                             </audio>
+                            <br>
+                          </el-form-item>
 
+                        </el-form>
+                      </el-dialog>
+
+                      <el-dialog v-model="dialogTableVisibleDescriptionAudio" title="All the audios of this product">
+                        <el-form>
+
+                          <el-form-item v-for="audio in props.row.DescriptionAudios" :key="audio.id">
+                            <p class="descriptionLabel">Language: {{ audio.language }}</p>
+                            <audio controls style="width: 100%">
+                              <source :src="audio.url" type="audio/mpeg">
+                            </audio>
                             <br>
                           </el-form-item>
 
@@ -58,7 +74,8 @@ export default {
     data(){
         return{
             tableData: '',
-          dialogTableVisible: false,
+          dialogTableVisibleNameAudio: false,
+          dialogTableVisibleDescriptionAudio: false
         }
     },
     methods: {
@@ -66,11 +83,18 @@ export default {
             await pmsProductList().then((res) => {
                 let array = res.data
                 console.log(array[0])
+
                 this.tableData = array
             })
         },
-      showAudios(productId) {
-        this.dialogTableVisible = true;
+      showNameAudios(productId) {
+        this.dialogTableVisibleNameAudio = true;
+        // For test
+        console.log(productId)
+
+      },
+      showDescriptionAudios(productId) {
+        this.dialogTableVisibleDescriptionAudio = true;
         // For test
         console.log(productId)
 
