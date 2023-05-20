@@ -78,12 +78,22 @@
 <!--                <input type="text" v-model="language_type" placeholder="Enter language type before upload" />-->
 <!--                <br>-->
                 <br><br>
-                <el-form-item label="Language Type (input before upload the audio): ">
+                <el-form-item label="Language Type (input before upload the audio and text): ">
                   <el-input v-model="language_type" />
                 </el-form-item>
                 <el-button type="button" @click="uploadWavDataName">upload audio name file</el-button>
                 <el-button type="button" @click="uploadWAVDataDescription">upload audio description file</el-button>
                 <br />
+                <br>
+
+                <el-form-item type="button" label="name text: ">
+                  <el-input v-model="this.upload_name_text.text" />
+                </el-form-item>
+                <el-button type="button" @click="upload_name_text_func">upload audio name text</el-button><br><br>
+                <el-form-item type="button" label="description text: ">
+                  <el-input v-model="this.upload_description_text.text" />
+                </el-form-item>
+                <el-button type="button" @click="upload_description_text_func">upload audio description text</el-button>
               </div>
             </el-dialog>
 
@@ -107,7 +117,15 @@
 import GuideBar from "@/components/guideBar.vue";
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { reactive } from 'vue';
-import {getProductByRecordID, getRecord, recordingList, uploadWAVDataDescription, uploadWavDataName} from "../service/user";
+import {
+  descriptionText,
+  getProductByRecordID,
+  getRecord,
+  nameText,
+  recordingList,
+  uploadWAVDataDescription,
+  uploadWavDataName
+} from "../service/user";
 import Recorder from "js-audio-recorder";
 
 export default {
@@ -141,6 +159,18 @@ export default {
             recordingId_to_sub: 0,
           productId_to_sub: 0,
             language_to_sub: 0,
+          name_text: '',
+          upload_description_text: {
+            "productId": 0,
+            "text": "",
+            "language": ""
+          },
+          upload_name_text: {
+            "productId": 0,
+            "text": "",
+            "language": ""
+          },
+          description_text: '',
             record_url: 'https://bucketeer-1a682029-f982-4755-8e3c-663c7658c9b8.s3.amazonaws.com/public/e501a298-86b5-4b17-b700-cabcef93de36-file_example_WAV_1MG.wav',
             form: reactive({
               "audios": '',
@@ -184,6 +214,44 @@ export default {
         onCancel(){
             this.dialogTableVisible = false;
         },
+
+      upload_description_text_func() {
+        if (!this.language_type) {
+          this.$message({
+            type: "warning",
+            message: "Please enter the language type before uploading the audio or text."
+          });
+          return;
+        }
+        this.upload_description_text.productId = this.productId_to_sub;
+        this.upload_description_text.language = this.language_type;
+        descriptionText(this.upload_description_text)
+            .then(response => {
+              console.log(response);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+      },
+      upload_name_text_func() {
+        if (!this.language_type) {
+          this.$message({
+            type: "warning",
+            message: "Please enter the language type before uploading the audio or text."
+          });
+          return;
+        }
+        this.upload_name_text.productId = this.productId_to_sub;
+        this.upload_name_text.language = this.language_type;
+        nameText(this.upload_name_text)
+            .then(response => {
+              console.log(response);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+      },
+
         handleCheck(recordingId) {
             this.dialogTableVisible = true;
             this.recordingId_to_sub = recordingId
@@ -295,6 +363,13 @@ export default {
       },
       //上传wav录音数据
       uploadWavDataName() {
+        if (!this.language_type) {
+          this.$message({
+            type: "warning",
+            message: "Please enter the language type before uploading the audio or text."
+          });
+          return;
+        }
         var wavBlob = this.recorder.getWAVBlob();
         // 创建一个formData对象
         var formData = new FormData()
@@ -314,6 +389,13 @@ export default {
       },
 
       uploadWAVDataDescription() {
+        if (!this.language_type) {
+          this.$message({
+            type: "warning",
+            message: "Please enter the language type before uploading the audio or text."
+          });
+          return;
+        }
         var wavBlob = this.recorder.getWAVBlob();
         // 创建一个formData对象
         var formData = new FormData()

@@ -68,3 +68,11 @@ export function uploadWAVDataDescription(formData) {
     }
   });
 }
+
+export function nameText(data) {
+  return axios.post('/pms/translate/createName', data)
+}
+
+export function descriptionText(data) {
+  return axios.post('/pms/translate/createDescription', data)
+}
